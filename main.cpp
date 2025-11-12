@@ -1,6 +1,5 @@
 // CSCI-40 Final Project
 // Author: Lizbeth Valadez
-
 /* 
  * Description:
  * A music library program where users can add or remove songs that are read and stored on a file. 
@@ -9,10 +8,19 @@
  * (WIP) There will be an option to create playlists from the main music library, potentially using pointers
  * to add the songs from the library
 */
+#include <string> // be able to use string
+#include <iostream>
+using namespace std;
 
 //struct for library
+struct musicLibrary {
+    string song;
+    int minutes;
+    string artist;
 
-#include <iostream>
+};
+
+
 
 int main() {
     return 0;
