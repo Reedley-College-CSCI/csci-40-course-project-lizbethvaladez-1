@@ -10,7 +10,11 @@
 */
 #include <string> // be able to use string
 #include <iostream>
+#include <fstream> // for file reading
+
 using namespace std;
+
+const int MAX_SONGS = 100; //max
 
 //struct for library
 struct musicLibrary {
@@ -20,8 +24,8 @@ struct musicLibrary {
 
 };
 
-
 int main() {
+
     //printing welcome to program
     cout << "--------   Welcome to your Music Library  --------" << endl;
 
@@ -33,8 +37,9 @@ int main() {
     int action;
     cout << "\nWhat would you like to do?(enter number)\n"
         << "1: View Libray 2: Edit Library 3: Search 4: Sorting Options 5: Quit\n";
-   cin >> action;
-    switch (action) {
+    cin >> action;
+    while (action != 5) {
+        switch (action) {
         case 1:
             cout << "Option 1: View Libray" << endl;
             break;
@@ -47,22 +52,20 @@ int main() {
         case 4:
             cout << "Option 4: Sorting Options" << endl;
             break;
-        case 5:
-            cout << "Option 5: Quit" << endl;
-            return 0;
-            break;
         default:
             cout << "Invalid Option-Retry." << endl;
             break;
-
-
+        }
+        cout << "\nWhat would you like to do?(enter number)\n"
+           << "1: View Libray 2: Edit Library 3: Search 4: Sorting Options 5: Quit\n";
+        cin >> action;
     }
+            //cout << "\nProgram ran." << endl;
 
-    cout << "\nProgram ran." << endl;
+            return 0;
 
-    return 0;
+   
 }
-
 //reading library file function into a dynamic array
 //print library function
 //add songs function
