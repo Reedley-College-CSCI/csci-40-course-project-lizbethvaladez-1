@@ -14,7 +14,7 @@
 
 using namespace std;
 
-const int MAX_SONGS = 100; //max
+const int MAX_SONGS = 25; //max
 
 //struct for library
 struct musicLibrary {
@@ -25,15 +25,18 @@ struct musicLibrary {
 };
 
 int main() {
+    musicLibrary* library[MAX_SONGS];
 
     //printing welcome to program
     cout << "--------   Welcome to your Music Library  --------" << endl;
 
-    //load playlist
+    //load playlist 
+
 
     //menu for actions (switch loop?)
     // - view library, edit library(remove or add song), search, end program 
-    // and sort playlist a certain way (potentially create playlist)
+    // and sort playlist a certain way (potentially create playlist) 
+    /*
     int action;
     cout << "\nWhat would you like to do?(enter number)\n"
         << "1: View Libray 2: Edit Library 3: Search 4: Sorting Options 5: Quit\n";
@@ -61,12 +64,15 @@ int main() {
         cin >> action;
     }
             //cout << "\nProgram ran." << endl;
+*/
+
 
             return 0;
 
    
 }
-//reading library file function into a dynamic array
+//reading library file into a dynamic array
+
 //print library function
 //add songs function
 //remove songs function
