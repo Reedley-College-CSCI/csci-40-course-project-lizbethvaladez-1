@@ -23,27 +23,32 @@ struct musicLibrary {
     double minutes;
 
 };
+
 //FUNCTIONS 
 void addSong(musicLibrary*& library, int& size);
-void readMusicLibrary(musicLibrary*& library, int size);
+void printMusicLibrary(musicLibrary*& library, int size);
+void readLibraryFile(musicLibrary*& library, int& songCount);
 
 
 int main() {
+    int songCount = 0; 
 
     musicLibrary* library = new musicLibrary[MAX_SIZE]; //dynamic array
 
     //printing welcome to program
     cout << "--------   Welcome to your Music Library  --------" << endl;
-
+   
     //load playlist 
+    readLibraryFile(library, songCount);
+   
 
     //add songs test for the array
     int size;
-    cout << "\nHow many songs would you like to add?\n";
-    cin >> size;
-    addSong(library, size);
+    //cout << "\nHow many songs would you like to add?\n";
+    //cin >> size;
+    //addSong(library, size);
 
-    readMusicLibrary(library, size); //test read
+    printMusicLibrary(library, songCount); //test read
 
     //menu for actions (switch loop?)
     // - view library, edit library(remove or add song), search, end program 
@@ -77,6 +82,7 @@ int main() {
     }
             //cout << "\nProgram ran." << endl;
 */
+ 
 
 
             return 0;
@@ -84,17 +90,41 @@ int main() {
    
 }
 //reading library file into a dynamic array
+void readLibraryFile(musicLibrary*& library, int& songCount) {
+    ifstream libFile("music_library.txt");
 
+    if (!libFile.is_open()) {
+        cout << "Error: Could not open file" << endl;
+        return;
+    }
+
+    while (songCount < MAX_SIZE && libFile >> library[songCount].song >> library[songCount].artist >> library[songCount].minutes) {
+        songCount++;
+        cout << "Song Loaded" << endl;
+    }
+    libFile.close();
+    cout << "Total Songs Loaded: " << songCount << endl;
+
+}
 
 //print library function
-void readMusicLibrary(musicLibrary*& library, int size) {
-    cout << "\n--- Songs Added ---" << endl;
-    for (int i = 0; i < size; i++) {
+void printMusicLibrary(musicLibrary*& library, int songCount) {
+    /* cout << "\n--- Songs Added ---" << endl;
+     for (int i = 0; i < size; i++) {
 
+         cout << i + 1 << ". " << library[i].song << " | by "
+             << library[i].artist << " | " << library[i].minutes << " minutes" << endl;
+
+ */
+    cout << "\n--- Library ---" << endl;
+    if (songCount == 0) {
+        cout << "Library is empty" << endl;
+        return;
+    }
+    for (int i = 0; i < songCount; i++) {
         cout << i + 1 << ". " << library[i].song << " | by "
             << library[i].artist << " | " << library[i].minutes << " minutes" << endl;
     }
-
 }
 //add songs function
 void addSong(musicLibrary*& library, int& size) {    
@@ -123,6 +153,8 @@ void addSong(musicLibrary*& library, int& size) {
 //search function
 //sorting function
 // edit song
+
 // Maybe:
+// library statistcs(Total songs, total minutes, etc)
 //create playlist function
 //delete playlist function
