@@ -20,11 +20,13 @@ const int MAX_SIZE = 50; //max
 struct musicLibrary {
     string song;
     string artist;
-    int minutes;
+    double minutes;
 
 };
 //FUNCTIONS 
 void addSong(musicLibrary*& library, int& size);
+void readMusicLibrary(musicLibrary*& library, int size);
+
 
 int main() {
 
@@ -40,6 +42,8 @@ int main() {
     cout << "\nHow many songs would you like to add?\n";
     cin >> size;
     addSong(library, size);
+
+    readMusicLibrary(library, size); //test read
 
     //menu for actions (switch loop?)
     // - view library, edit library(remove or add song), search, end program 
@@ -81,24 +85,35 @@ int main() {
 }
 //reading library file into a dynamic array
 
+
 //print library function
+void readMusicLibrary(musicLibrary*& library, int size) {
+    cout << "\n--- Songs Added ---" << endl;
+    for (int i = 0; i < size; i++) {
+
+        cout << i + 1 << ". " << library[i].song << " | by "
+            << library[i].artist << " | " << library[i].minutes << " minutes" << endl;
+    }
+
+}
 //add songs function
 void addSong(musicLibrary*& library, int& size) {    
     library = new musicLibrary[size];
 
       for (int i = 0; i < size; i++) {
-          cout << "--- Song " << i + 1 << endl;
+          cout << "--- Song " << i + 1 << " ---";
 
           cin.ignore();
-
-          cout << "\nTitle: ";
+          
+          cout << "Song Name: ";
           getline(cin, library[i].song); 
 
           cout << "Artist: ";
           getline(cin, library[i].artist); 
 
-          cout << "Length in Minutes: ";
-          cin >> library[i].minutes;  
+          cout << "Length in Minutes (0.00): ";
+          cin >> library[i].minutes;
+          cout << endl;
       }
 
       cout << "\nAdded Succesfully" << endl;
@@ -107,6 +122,7 @@ void addSong(musicLibrary*& library, int& size) {
 //remove songs function
 //search function
 //sorting function
+// edit song
 // Maybe:
 //create playlist function
 //delete playlist function
