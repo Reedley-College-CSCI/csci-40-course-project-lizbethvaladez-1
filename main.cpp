@@ -14,24 +14,32 @@
 
 using namespace std;
 
-const int MAX_SONGS = 25; //max
+const int MAX_SIZE = 50; //max
 
 //struct for library
 struct musicLibrary {
     string song;
-    int minutes;
     string artist;
+    int minutes;
 
 };
+//FUNCTIONS 
+void addSong(musicLibrary*& library, int& size);
 
 int main() {
-    musicLibrary* library[MAX_SONGS];
+
+    musicLibrary* library = new musicLibrary[MAX_SIZE]; //dynamic array
 
     //printing welcome to program
     cout << "--------   Welcome to your Music Library  --------" << endl;
 
     //load playlist 
 
+    //add songs test for the array
+    int size;
+    cout << "\nHow many songs would you like to add?\n";
+    cin >> size;
+    addSong(library, size);
 
     //menu for actions (switch loop?)
     // - view library, edit library(remove or add song), search, end program 
@@ -75,6 +83,27 @@ int main() {
 
 //print library function
 //add songs function
+void addSong(musicLibrary*& library, int& size) {    
+    library = new musicLibrary[size];
+
+      for (int i = 0; i < size; i++) {
+          cout << "--- Song " << i + 1 << endl;
+
+          cin.ignore();
+
+          cout << "\nTitle: ";
+          getline(cin, library[i].song); 
+
+          cout << "Artist: ";
+          getline(cin, library[i].artist); 
+
+          cout << "Length in Minutes: ";
+          cin >> library[i].minutes;  
+      }
+
+      cout << "\nAdded Succesfully" << endl;
+}
+
 //remove songs function
 //search function
 //sorting function
