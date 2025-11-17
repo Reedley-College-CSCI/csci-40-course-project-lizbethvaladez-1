@@ -102,24 +102,25 @@ void readLibraryFile(musicLibrary*& library, int& songCount) {
     songCount = 0;
 
     while (songCount < MAX_SIZE && getline(libFile, newLibrary[songCount].song)) {
-        cout << "--- Song " << songCount + 1 << " ---" << endl;
 
-        cout << "\nSong Name: " << newLibrary[songCount].song << endl;
+            //song already read into the while function, 
 
-        cout << "Artist: ";
+        //Artist
         getline(libFile, newLibrary[songCount].artist);
-        cout << newLibrary[songCount].artist << endl;
 
-        cout << "Length in Minutes (0.00): ";
+        //minutes - needs to be converted from string to double
         string minutesStr;
         getline(libFile, minutesStr);
         newLibrary[songCount].minutes = stod(minutesStr);
-        cout << newLibrary[songCount].minutes << endl;
 
-        cout << "Song Loaded" << endl;
-        cout << endl;
-
+        cout << "Song Loaded" << endl; //making sure it loads songs
         songCount++;
+        
+        if (songCount == MAX_SIZE) { //incase it goes over max songs
+            cout << "Max songs library can load" << endl;
+            break;
+        }
+
     }
 
     cout << endl;
@@ -155,6 +156,12 @@ void printMusicLibrary(musicLibrary*& library, int songCount) {
 //add songs function
 void addSong(musicLibrary*& library, int& size) {    
     library = new musicLibrary[size];
+    ifstream libFile("music_library.txt");
+
+    if (!libFile.is_open()) {
+        cout << "Error: Could not open file" << endl;
+        return;
+    }
 
     for (int i = 0; i < size; i++) {
         cout << "--- Song " << i + 1 << " ---";
