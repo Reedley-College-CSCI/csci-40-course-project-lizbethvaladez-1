@@ -29,6 +29,8 @@ struct musicLibrary {
 void addSong();
 void printMusicLibrary(musicLibrary*& library, int size);
 void readLibraryFile(musicLibrary*& library, int& songCount);
+void removeSong(musicLibrary*& library, int& songCount);
+
 
 
 int main() {
@@ -55,15 +57,41 @@ int main() {
     while (action != 5) {
         switch (action) {
         case 1:
-            cout << "Option 1: View Libray" << endl;
+            cout << "Option 1: View Libray";
             readLibraryFile(library, songCount); //rereads the array so when a new song is added it can read it
             printMusicLibrary(library, songCount); //test read
             break;
-        case 2:
+
+        case 2: //edit library
             cout << "Option 2: Edit Library" << endl;
-            addSong();
-                
+            char option;
+            cout << "A. Add a song, B. Remove a Song, or C. Remove a Song? (A, B, or C)\n X to Cancel\n";
+            cin >> option;
+                while ((option != 'x') && (option != 'X')) {
+                    switch (option) {
+                    case 'A': //adds song/s
+                    case 'a':
+                        addSong();
+                        break;
+
+                    case 'B': //edits a song
+                    case 'b':
+                        cout << "Editing song" << endl;
+                        break;
+
+                    case 'C': //removing song
+                    case 'c':
+                        cout << "Removing Song" << endl;
+                        break;
+                    default:
+                        cout << "Invalid Option - Retry" << endl;
+                        break;
+                    }
+                    cout << "\nA. Add a song, B. Remove a Song, or C. Remove a Song? (A, B, or C)\n X to Cancel\n";
+                    cin >> option;
+                }   
             break;
+
         case 3:
             cout << "Option 3: Search" << endl;
             break;
@@ -111,7 +139,6 @@ void readLibraryFile(musicLibrary*& library, int& songCount) {
         getline(libFile, minutesStr);
         newLibrary[songCount].minutes = stod(minutesStr);
 
-        cout << "Song Loaded" << endl; //making sure it loads songs
         songCount++;
         
         if (songCount == MAX_SIZE) { //incase it goes over max songs
@@ -126,7 +153,7 @@ void readLibraryFile(musicLibrary*& library, int& songCount) {
     library = newLibrary;
 
     libFile.close();
-    cout << "Total Songs Loaded: " << songCount << endl;
+    cout << "\nTotal Songs Loaded: " << songCount;
 
 }
 
@@ -191,6 +218,13 @@ void addSong() {
 }
 
 //remove songs function
+void removeSong(musicLibrary*& library, int& songCount) {
+    if (songCount == 0) {
+        cout << "Library is empty - no songs to remove." << endl;
+        return;
+    }
+}
+
 //search function
 //sorting function
 // edit song
