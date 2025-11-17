@@ -41,17 +41,14 @@ int main() {
    
     //load playlist 
     readLibraryFile(library, songCount);
-    printMusicLibrary(library, songCount); //test read
 
     //add songs test for the array
-
-    addSong();
 
 
     //menu for actions (switch loop?)
     // - view library, edit library(remove or add song), search, end program 
     // and sort playlist a certain way (potentially create playlist) 
-    /*
+
     int action;
     cout << "\nWhat would you like to do?(enter number)\n"
         << "1: View Libray 2: Edit Library 3: Search 4: Sorting Options 5: Quit\n";
@@ -60,9 +57,12 @@ int main() {
         switch (action) {
         case 1:
             cout << "Option 1: View Libray" << endl;
+            printMusicLibrary(library, songCount); //test read
             break;
         case 2:
             cout << "Option 2: Edit Library" << endl;
+            addSong();
+                
             break;
         case 3:
             cout << "Option 3: Search" << endl;
@@ -79,7 +79,6 @@ int main() {
         cin >> action;
     }
             //cout << "\nProgram ran." << endl;
-*/
  
 
 
@@ -89,6 +88,7 @@ int main() {
 }
 //reading library file into a dynamic array
 void readLibraryFile(musicLibrary*& library, int& songCount) {
+
     ifstream libFile("music_library.txt");
 
     if (!libFile.is_open()) {
