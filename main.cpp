@@ -40,6 +40,7 @@ int main() {
     cout << "--------   Welcome to your Music Library  --------" << endl;
    
     //load playlist 
+    readLibraryFile(library, songCount);
 
     //add songs test for the array
 
@@ -56,7 +57,6 @@ int main() {
         switch (action) {
         case 1:
             cout << "Option 1: View Libray" << endl;
-            readLibraryFile(library, songCount); //rereads the array so when a new song is added it can read it
             printMusicLibrary(library, songCount); //test read
             break;
         case 2:
@@ -125,6 +125,8 @@ void readLibraryFile(musicLibrary*& library, int& songCount) {
     delete[] library;
     library = newLibrary;
 
+
+    cout << "\nAdded Succesfully" << endl;
     libFile.close();
     cout << "Total Songs Loaded: " << songCount << endl;
 
@@ -187,6 +189,10 @@ void addSong() {
         cout << "Added: " << song << " by " << artist << " (" << minutes << " minutes)" << endl;
     }
     libFile.close();
+
+
+    cout << song << " " << artist << " " << minutes;
+
     cout << "\nAdded Succesfully" << endl;
 }
 
