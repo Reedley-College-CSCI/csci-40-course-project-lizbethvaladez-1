@@ -98,10 +98,36 @@ void readLibraryFile(musicLibrary*& library, int& songCount) {
         return;
     }
 
-    while (songCount < MAX_SIZE && libFile >> library[songCount].song >> library[songCount].artist >> library[songCount].minutes) {
-        songCount++;
+    musicLibrary* newLibrary = new musicLibrary[MAX_SIZE];
+    songCount = 0;
+
+    while (songCount < MAX_SIZE && getline(libFile, newLibrary[songCount].song)) {
+        cout << "--- Song " << songCount + 1 << " ---" << endl;
+
+        cout << "\nSong Name: " << newLibrary[songCount].song << endl;
+
+        cout << "Artist: ";
+        getline(libFile, newLibrary[songCount].artist);
+        cout << newLibrary[songCount].artist << endl;
+
+        cout << "Length in Minutes (0.00): ";
+        string minutesStr;
+        getline(libFile, minutesStr);
+        newLibrary[songCount].minutes = stod(minutesStr);
+        cout << newLibrary[songCount].minutes << endl;
+
         cout << "Song Loaded" << endl;
+        cout << endl;
+
+        songCount++;
     }
+
+    cout << endl;
+    delete[] library;
+    library = newLibrary;
+
+
+    cout << "\nAdded Succesfully" << endl;
     libFile.close();
     cout << "Total Songs Loaded: " << songCount << endl;
 
@@ -130,23 +156,23 @@ void printMusicLibrary(musicLibrary*& library, int songCount) {
 void addSong(musicLibrary*& library, int& size) {    
     library = new musicLibrary[size];
 
-      for (int i = 0; i < size; i++) {
-          cout << "--- Song " << i + 1 << " ---";
+    for (int i = 0; i < size; i++) {
+        cout << "--- Song " << i + 1 << " ---";
 
-          cin.ignore();
-          
-          cout << "Song Name: ";
-          getline(cin, library[i].song); 
+        cin.ignore();
 
-          cout << "Artist: ";
-          getline(cin, library[i].artist); 
+        cout << "Song Name: ";
+        getline(cin, library[i].song);
 
-          cout << "Length in Minutes (0.00): ";
-          cin >> library[i].minutes;
-          cout << endl;
-      }
+        cout << "Artist: ";
+        getline(cin, library[i].artist);
 
-      cout << "\nAdded Succesfully" << endl;
+        cout << "Length in Minutes (0.00): ";
+        cin >> library[i].minutes;
+        cout << endl;
+    }
+
+    cout << "\nAdded Succesfully" << endl;
 }
 
 //remove songs function
