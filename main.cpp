@@ -225,10 +225,9 @@ void removeSong(musicLibrary*& library, int& songCount) {
     }
 }
 
+// edit song
 //search function
 //sorting function
-// edit song
-
 // Maybe:
 // library statistcs(Total songs, total minutes, etc)
 //create playlist function
