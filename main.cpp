@@ -26,7 +26,7 @@ struct musicLibrary {
 };
 
 //FUNCTIONS 
-void addSong(musicLibrary*& library, int& size);
+void addSong();
 void printMusicLibrary(musicLibrary*& library, int size);
 void readLibraryFile(musicLibrary*& library, int& songCount);
 
@@ -44,10 +44,8 @@ int main() {
     printMusicLibrary(library, songCount); //test read
 
     //add songs test for the array
-    int size;
-    cout << "\nHow many songs would you like to add?\n";
-    cin >> size;
-    addSong(library, size);
+
+    addSong();
 
 
     //menu for actions (switch loop?)
@@ -154,8 +152,7 @@ void printMusicLibrary(musicLibrary*& library, int songCount) {
     }
 }
 //add songs function
-void addSong(musicLibrary*& library, int& size) {    
-    library = new musicLibrary[size]; 
+void addSong() {    
     ofstream libFile("music_library.txt", ios::app);
 
     if (!libFile.is_open()) {
@@ -163,6 +160,9 @@ void addSong(musicLibrary*& library, int& size) {
         return;
     }
 
+    int size;
+    cout << "\nHow many songs would you like to add?\n";
+    cin >> size;
 
     string song, artist;
     double minutes;
