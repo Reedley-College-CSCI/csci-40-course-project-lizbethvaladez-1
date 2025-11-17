@@ -11,6 +11,7 @@
 #include <string> // be able to use string
 #include <iostream>
 #include <fstream> // for file reading
+#include <iomanip>
 
 using namespace std;
 
@@ -40,15 +41,14 @@ int main() {
    
     //load playlist 
     readLibraryFile(library, songCount);
-   
+    printMusicLibrary(library, songCount); //test read
 
     //add songs test for the array
     int size;
-    //cout << "\nHow many songs would you like to add?\n";
-    //cin >> size;
-    //addSong(library, size);
+    cout << "\nHow many songs would you like to add?\n";
+    cin >> size;
+    addSong(library, size);
 
-    printMusicLibrary(library, songCount); //test read
 
     //menu for actions (switch loop?)
     // - view library, edit library(remove or add song), search, end program 
@@ -155,29 +155,43 @@ void printMusicLibrary(musicLibrary*& library, int songCount) {
 }
 //add songs function
 void addSong(musicLibrary*& library, int& size) {    
-    library = new musicLibrary[size];
-    ifstream libFile("music_library.txt");
+    library = new musicLibrary[size]; 
+    ofstream libFile("music_library.txt", ios::app);
 
     if (!libFile.is_open()) {
         cout << "Error: Could not open file" << endl;
         return;
     }
 
+
+    string song, artist;
+    double minutes;
+
     for (int i = 0; i < size; i++) {
-        cout << "--- Song " << i + 1 << " ---";
+        cout << "--- Song " << i + 1 << " ---" << endl;
 
         cin.ignore();
 
         cout << "Song Name: ";
-        getline(cin, library[i].song);
+        getline(cin, song);
 
         cout << "Artist: ";
-        getline(cin, library[i].artist);
+        getline(cin, artist);
 
         cout << "Length in Minutes (0.00): ";
-        cin >> library[i].minutes;
+        cin >> minutes;
         cout << endl;
+
+        libFile << song << "\n";
+        libFile << artist << "\n";
+        libFile << fixed << setprecision(2) << minutes << "\n";
+
+        cout << "Added: " << song << " by " << artist << " (" << minutes << " minutes)" << endl;
     }
+    libFile.close();
+
+
+    cout << song << " " << artist << " " << minutes;
 
     cout << "\nAdded Succesfully" << endl;
 }
