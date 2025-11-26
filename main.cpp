@@ -65,7 +65,7 @@ int main() {
         case 2: //edit library
             cout << "Option 2: Edit Library" << endl;
             char option;
-            cout << "A. Add a song, B. Remove a Song, or C. Remove a Song? (A, B, or C)\n X to Cancel\n";
+            cout << "A. Add a song, B. Edit a Song, or C. Remove a Song? (A, B, or C)\n X to Cancel\n";
             cin >> option;
             while ((option != 'x') && (option != 'X')) {
                 switch (option) {
@@ -81,8 +81,9 @@ int main() {
 
                 case 'C': //removing song
                 case 'c':
-                    cout << "Removing Song" << endl;
-                    break;
+                    readLibraryFile(library, songCount); //rereads the array so it can display the songs that could be removed
+                    removeSong(library, songCount);
+                        break;
                 default:
                     cout << "Invalid Option - Retry" << endl;
                     break;
@@ -219,10 +220,21 @@ void addSong() {
 
 //remove songs function
 void removeSong(musicLibrary*& library, int& songCount) {
+    int removeChoice;
     if (songCount == 0) {
         cout << "Library is empty - no songs to remove." << endl;
         return;
     }
+    cout << "Current songs in library:" << endl; //displays songs to remove
+    for (int i = 0; i < songCount; i++) {
+        cout << i + 1 << ". " << library[i].song << " | by "
+            << library[i].artist << " | " << library[i].minutes << " minutes" << endl;
+    }
+
+    cout << "Which song would would you like to remove?" << endl;
+    cin >> removeChoice;
+    cout << "Song " << removeChoice << " removed" << endl;
+
 }
 
 // edit song
