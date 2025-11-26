@@ -248,7 +248,7 @@ void removeSong(musicLibrary*& library, int& songCount) {
     }
     songCount--; 
 
-    ofstream libFile("music_library.txt", ios::app);
+    ofstream libFile("music_library.txt");
     if (!libFile.is_open()) {
         cout << "Error: Could not open file for writing" << endl;
         return;
