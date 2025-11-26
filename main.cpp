@@ -265,6 +265,26 @@ void removeSong(musicLibrary*& library, int& songCount) {
 }
 
 // edit song
+void editSong(musicLibrary*& library, int songCount) {
+
+    if (songCount == 0) { //checks if songCount is 0
+        cout << "Library is empty, unable to write it." << endl;
+        return;
+    }
+
+    int choice;
+    cout << "Which song would would you like to remove?" << endl;
+    cin >> choice;
+    if (choice < 1 || choice > songCount) { //validates choice
+        cout << "Invalid choice." << endl;
+        return;
+    }
+
+    int indexChoice = choice - 1; //makes choice aligns correctly with array index
+
+    cout << "Editing: " << library[indexChoice].song << " by "
+        << library[indexChoice].artist << endl;
+}
 //search function
 //sorting function
 // Maybe:
