@@ -30,6 +30,7 @@ void addSong();
 void printMusicLibrary(musicLibrary*& library, int size);
 void readLibraryFile(musicLibrary*& library, int& songCount);
 void removeSong(musicLibrary*& library, int& songCount);
+void libraryStats(musicLibrary*& library, int songCount);
 
 
 
@@ -59,6 +60,7 @@ int main() {
         case 1:
             cout << "Option 1: View Libray";
             readLibraryFile(library, songCount); //rereads the array so when a new song is added it can read it
+            libraryStats(library, songCount); // prints library stats when library viewed
             printMusicLibrary(library, songCount); //test read
             break;
 
@@ -103,7 +105,7 @@ int main() {
             cout << "Invalid Option-Retry." << endl;
             break;
         }
-        cout << "\nWhat would you like to do?(enter number)\n"
+        cout << "\nWhat would you like to do?\n"
             << "1: View Libray 2: Edit Library 3: Search 4: Sorting Options 5: Quit\n";
         cin >> action;
     }
@@ -154,7 +156,7 @@ void readLibraryFile(musicLibrary*& library, int& songCount) {
     library = newLibrary;
 
     libFile.close();
-    cout << "\nTotal Songs Loaded: " << songCount;
+   // cout << "\nTotal Songs Loaded: " << songCount;
 
 }
 
@@ -167,7 +169,7 @@ void printMusicLibrary(musicLibrary*& library, int songCount) {
              << library[i].artist << " | " << library[i].minutes << " minutes" << endl;
 
  */
-    cout << "\n--- Library ---" << endl;
+    cout << "--- Library ---" << endl;
     if (songCount == 0) {
         cout << "Library is empty" << endl;
         return;
@@ -241,6 +243,21 @@ void removeSong(musicLibrary*& library, int& songCount) {
 //search function
 //sorting function
 // Maybe:
-// library statistcs(Total songs, total minutes, etc)
+// library statistcs(prints total songs, total minutes, etc)
+void libraryStats(musicLibrary*& library, int songCount) {
+    double totalMinutes = 0.0;
+    for (int i = 0; i < songCount; i++) {
+        totalMinutes += library[i].minutes; //incramenting total minutes
+    }
+    //hour convert
+    double hours = totalMinutes / 60;
+    //check if at least an hour, if not print in minutes
+    if (hours < 1) {
+        cout << "\nTotal Songs: " << songCount << " | Length: " << totalMinutes << " minutes" << endl;
+    } 
+    else {
+        cout << "\nTotal Songs: " << songCount << " | Length: " << hours << " hour(s)" << endl;
+    }
+}
 //create playlist function
 //delete playlist function
