@@ -31,6 +31,7 @@ void printMusicLibrary(musicLibrary*& library, int size);
 void readLibraryFile(musicLibrary*& library, int& songCount);
 void removeSong(musicLibrary*& library, int& songCount);
 void libraryStats(musicLibrary*& library, int songCount);
+void editSong(musicLibrary*& library, int songCount);
 
 
 
@@ -60,7 +61,7 @@ int main() {
             printMusicLibrary(library, songCount); //test read
             break;
 
-        case 2: //edit library
+        case 2: //edit library --------------------------------------------------------------------------- CASE 2
             cout << "Option 2: Edit Library" << endl;
             char option;
             cout << "A. Add a song, B. Edit a Song, or C. Remove a Song? (A, B, or C)\n X to Cancel\n";
@@ -75,6 +76,8 @@ int main() {
                 case 'B': //edits a song
                 case 'b':
                     cout << "Editing song" << endl;
+                    readLibraryFile(library, songCount); //rereads the array so it can display the songs that could be added
+                    editSong(library, songCount);
                     break;
 
                 case 'C': //removing song
@@ -86,9 +89,8 @@ int main() {
                     cout << "Invalid Option - Retry" << endl;
                     break;
                 }
-                cout << "\nA. Add a song, B. Remove a Song, or C. Remove a Song? (A, B, or C)\n X to Cancel\n";
-                cin >> option;
-            }
+                break;
+            } //---------------------------------------------------------------------------------------------
             break;
 
         case 3:
@@ -273,7 +275,12 @@ void editSong(musicLibrary*& library, int songCount) {
     }
 
     int choice;
-    cout << "Which song would would you like to remove?" << endl;
+    cout << "Current songs in library:" << endl; //displays songs available to edit
+    for (int i = 0; i < songCount; i++) {
+        cout << i + 1 << ". " << library[i].song << " | by "
+            << library[i].artist << " | " << library[i].minutes << " minutes" << endl;
+    }
+    cout << "Which song would would you like to edit?" << endl;
     cin >> choice;
     if (choice < 1 || choice > songCount) { //validates choice
         cout << "Invalid choice." << endl;
