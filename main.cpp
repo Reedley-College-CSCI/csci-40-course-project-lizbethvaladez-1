@@ -266,6 +266,7 @@ void removeSong(musicLibrary*& library, int& songCount) {
     cout << "Song removed successfully!" << endl;
 }
 
+
 // edit song
 void editSong(musicLibrary*& library, int songCount) {
 
@@ -294,28 +295,84 @@ void editSong(musicLibrary*& library, int songCount) {
     
     //add choice swtich statement
     char editOption;
+    string newSongName, newArtistName;
+    double newMinutes;
+
     cout << "\nWhat would you like to edit?\n"
-        << "A. Song Name, B. Artist, C. Duration, D. All Fields, X. Cancel"
+        << "A. Song Name, B. Artist, C. Duration, D. All Fields, X. Cancel\n"
         << "Enter your choice: ";
     cin >> editOption;
     cin.ignore();
-
-    switch (editOption) {
+    //switch ------------------------------------------------
+    switch(editOption) {
         case 'A':
         case 'a':
+            cout << "Current song name: " << library[indexChoice].song << endl;
+            cout << "Enter new song name: ";
+            getline(cin, newSongName);
+            library[indexChoice].song = newSongName;
+            cout << "Song name updated successfully" << endl;
             break;
         case 'B':
         case 'b':
+            cout << "Current Artist name: " << library[indexChoice].artist << endl;
+            cout << "Enter new Artist name: ";
+            getline(cin, newArtistName);
+            library[indexChoice].artist = newArtistName;
+            cout << "Artist name updated successfully" << endl;
             break;
+        case 'C':
+        case 'c':
+            cout << "Current Minutes: " << library[indexChoice].minutes << endl;
+            cout << "Enter new time(0.00): ";
+            cin >> newMinutes;
+            library[indexChoice].minutes = newMinutes;
+            cout << "Artist name updated successfully" << endl;
+            break;  
         case 'D':
         case 'd':
+            //song
+            cout << "Current song name: " << library[indexChoice].song << endl;
+            cout << "Enter new song name: ";
+            getline(cin, newSongName);
+            library[indexChoice].song = newSongName;
+            cout << "Song name updated successfully" << endl;
+            //artist
+            cout << "Current Artist name: " << library[indexChoice].artist << endl;
+            cout << "Enter new Artist name: ";
+            getline(cin, newArtistName);
+            library[indexChoice].artist = newArtistName;
+            cout << "Artist name updated successfully" << endl;
+            //minutes
+            cout << "Current Minutes: " << library[indexChoice].minutes << endl;
+            cout << "Enter new time(0.00): ";
+            cin >> newMinutes;
+            library[indexChoice].minutes = newMinutes;
+            cout << "Artist name updated successfully" << endl;
             break;
         case 'X':
         case 'x':
-            break;
+            cout << "Edit cancelled." << endl;
+            return;
         default:
-            break;
+            cout << "Invalid option, retry." << endl;
+            return;
     }
+    //outputting new songs to file-----------------------------
+    ofstream libFile("music_library.txt");
+    if (!libFile.is_open()) {
+        cout << "Error: Could not open file for writing" << endl;
+        return;
+    }
+
+    for (int i = 0; i < songCount; i++) {
+        libFile << library[i].song << endl;
+        libFile << library[i].artist << endl;
+        libFile << fixed << setprecision(2) << library[i].minutes << endl;
+    }
+
+    libFile.close();
+    cout << "Song removed successfully!" << endl;
 
 
 }
