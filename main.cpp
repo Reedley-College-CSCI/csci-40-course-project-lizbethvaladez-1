@@ -42,11 +42,6 @@ int main() {
     //printing welcome to program
     cout << "--------   Welcome to your Music Library  --------" << endl;
 
-    //load playlist 
-
-    //add songs test for the array
-
-
     //menu for actions (switch loop?)
     // - view library, edit library(remove or add song), search, end program 
     // and sort playlist a certain way (potentially create playlist) 
@@ -55,6 +50,7 @@ int main() {
     cout << "\nWhat would you like to do?(enter number)\n"
         << "1: View Libray 2: Edit Library 3: Search 4: Sorting Options 5: Quit\n";
     cin >> action;
+
     while (action != 5) {
         switch (action) {
         case 1:
@@ -109,8 +105,6 @@ int main() {
             << "1: View Libray 2: Edit Library 3: Search 4: Sorting Options 5: Quit\n";
         cin >> action;
     }
-    //cout << "\nProgram ran." << endl;
-
 
 
     return 0;
@@ -220,13 +214,14 @@ void addSong() {
     cout << "\nAdded Succesfully" << endl;
 }
 
-//remove songs function
+//remove songs function 
 void removeSong(musicLibrary*& library, int& songCount) {
-    int removeChoice;
+    int choice;
     if (songCount == 0) {
         cout << "Library is empty - no songs to remove." << endl;
         return;
     }
+
     cout << "Current songs in library:" << endl; //displays songs to remove
     for (int i = 0; i < songCount; i++) {
         cout << i + 1 << ". " << library[i].song << " | by "
@@ -234,9 +229,39 @@ void removeSong(musicLibrary*& library, int& songCount) {
     }
 
     cout << "Which song would would you like to remove?" << endl;
-    cin >> removeChoice;
-    cout << "Song " << removeChoice << " removed" << endl;
+    cin >> choice;
+     
+    if (choice < 1 || choice > songCount) {
+        cout << "Invalid choice." << endl;
+        return;
+    }
 
+    int indexChoice = choice - 1; //makes choice aligns correctly with array index
+
+    // shows song being remoced
+    cout << "Removing: " << library[indexChoice].song << " by "
+        << library[indexChoice].artist << endl;
+
+    // shifts array elements left
+    for (int i = indexChoice; i < songCount - 1; i++) {
+        library[i] = library[i + 1];
+    }
+    songCount--; 
+
+    ofstream libFile("music_library.txt", ios::app);
+    if (!libFile.is_open()) {
+        cout << "Error: Could not open file for writing" << endl;
+        return;
+    }
+
+    for (int i = 0; i < songCount; i++) {
+        libFile << library[i].song << endl;
+        libFile << library[i].artist << endl;
+        libFile << fixed << setprecision(2) << library[i].minutes << endl;
+    }
+
+    libFile.close();
+    cout << "Song removed successfully!" << endl;
 }
 
 // edit song
