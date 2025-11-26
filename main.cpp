@@ -289,9 +289,37 @@ void editSong(musicLibrary*& library, int songCount) {
 
     int indexChoice = choice - 1; //makes choice aligns correctly with array index
 
-    cout << "Editing: " << library[indexChoice].song << " by "
+    cout << "Editing: " << library[indexChoice].song << " by " //displays song
         << library[indexChoice].artist << endl;
+    
+    //add choice swtich statement
+    char editOption;
+    cout << "\nWhat would you like to edit?\n"
+        << "A. Song Name, B. Artist, C. Duration, D. All Fields, X. Cancel"
+        << "Enter your choice: ";
+    cin >> editOption;
+    cin.ignore();
+
+    switch (editOption) {
+        case 'A':
+        case 'a':
+            break;
+        case 'B':
+        case 'b':
+            break;
+        case 'D':
+        case 'd':
+            break;
+        case 'X':
+        case 'x':
+            break;
+        default:
+            break;
+    }
+
+
 }
+
 //search function
 //sorting function
 // Maybe:
