@@ -81,6 +81,8 @@ int main() {
 
         case 3:
             cout << "Option 3: Search" << endl;
+            readLibraryFile(library, songCount); //rereads the array again
+            searchLibrary(library, songCount);
             break;
         case 4:
             cout << "Option 4: Sorting Options" << endl;
@@ -609,6 +611,28 @@ void searchLibrary(musicLibrary*& library, int songCount) {
     }
 }
 void searchSong(musicLibrary*& library, int songCount) {
+    cin.ignore();
+    string songSearch;
+    cout << "Enter song name to search for: ";
+    getline(cin, songSearch);
+
+    bool found = false;
+    cout << "\n--- Search Results ---\n";
+
+    for (int i = 0; i < songCount; i++) {
+        if (library[i].song.find(songSearch) != string::npos) {
+            // partial-match search
+            cout << i + 1 << ". " << library[i].song
+                << " | by " << library[i].artist
+                << " | " << library[i].minutes << " minutes\n";
+            found = true;
+        }
+    }
+
+    if (!found) {
+        cout << "No songs matching \"" << songSearch << "\" were found.\n";
+    }
+
 
 }
 void searchArtist(musicLibrary*& library, int songCount) {
