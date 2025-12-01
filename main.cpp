@@ -41,7 +41,9 @@ void sortBySong(musicLibrary*& library, int songCount, bool ascending);
 void sortByArtist(musicLibrary*& library, int songCount, bool ascending);
 void sortByMinutes(musicLibrary*& library, int songCount, bool ascending);
 //searching ---------
-void searchLibrary(musicLibrary*& library, int songCount)
+void searchLibrary(musicLibrary*& library, int songCount);
+void searchSong(musicLibrary*& library, int songCount);
+void searchArist(musicLibrary*& library, int songCount);
 
 
 
