@@ -178,6 +178,10 @@ void printMusicLibrary(musicLibrary*& library, int songCount) {
             << library[i].artist << " | " << library[i].minutes << " minutes" << endl;
     }
 }
+//edit library options
+void editLibrary() {
+    //add menu for editing library here
+}
 //add songs function
 void addSong() {
     ofstream libFile("music_library.txt", ios::app);
@@ -384,8 +388,11 @@ void searchLibrary(musicLibrary*& library, int songCount) {
 
 }*/
 //sorting function
-void sortLibrary(musicLibrary*& library, int songCount) {
-
+void sortLibrary(musicLibrary*& library, int songCount) { //sort function choice
+    if (songCount == 0) {
+        cout << "Library is empty, nothing to sort." << endl;
+        return;
+    }
 }
 void sortBySong(musicLibrary*& library, int songCount) {
 
