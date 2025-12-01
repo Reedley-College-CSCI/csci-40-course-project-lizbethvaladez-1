@@ -32,6 +32,9 @@ void readLibraryFile(musicLibrary*& library, int& songCount);
 void removeSong(musicLibrary*& library, int& songCount);
 void libraryStats(musicLibrary*& library, int songCount);
 void editSong(musicLibrary*& library, int songCount);
+void sortLibrary(musicLibrary*& library, int songCount);
+void sortBySong(musicLibrary*& library, int songCount);
+void sortByArist(musicLibrary*& library, int songCount);
 
 
 
@@ -376,9 +379,20 @@ void editSong(musicLibrary*& library, int songCount) {
 
 
 }
+/*//search function
+void searchLibrary(musicLibrary*& library, int songCount) {
 
-//search function
+}*/
 //sorting function
+void sortLibrary(musicLibrary*& library, int songCount) {
+
+}
+void sortBySong(musicLibrary*& library, int songCount) {
+
+}
+void sortByArtist(musicLibrary*& library, int songCount) {
+
+}
 // Maybe:
 // library statistcs(prints total songs, total minutes, etc)
 void libraryStats(musicLibrary*& library, int songCount) {
