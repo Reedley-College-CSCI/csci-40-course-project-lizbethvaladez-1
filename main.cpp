@@ -16,7 +16,7 @@
 
 using namespace std;
 
-const int MAX_SIZE = 50; //max
+const int MAX_SIZE = 100; //max
 
 //struct for library
 struct musicLibrary {
@@ -690,8 +690,40 @@ void searchArtist(musicLibrary*& library, int songCount) {
     }
 }
 void searchBoth(musicLibrary*& library, int songCount) {
+    cin.ignore();
+    string searchTerm;
+    cout << "Enter search term to look for in song names and artists: ";
+    getline(cin, searchTerm);
 
+    string searchTermLower = searchTerm; //converts search term to lowercase
+    for (char& c : searchTermLower) {
+        c = tolower(c);
+    }
+
+    bool found = false;
+    cout << "\n--- Search Results for " << searchTerm << " in Songs and Artists ---\n";
+
+    //convert song and artist to lowercase for comparison
+    for (int i = 0; i < songCount; i++) {
+        string songNameLower = library[i].song; //convert song name in array to lowercase to compare
+        for (char& c : songNameLower) {
+            c = tolower(c);
+        }
+        string artistNameLower = library[i].artist;  //convert artist name in array to lowercase to compare
+        for (char& c : artistNameLower) {
+            c = tolower(c);
+        }
+
+        if (songNameLower.find(searchTermLower) != string::npos || //checks if term is in song OR artist name
+            artistNameLower.find(searchTermLower) != string::npos) {
+            cout << i + 1 << ". " << library[i].song
+                << " | by " << library[i].artist
+                << " | " << library[i].minutes << " minutes\n";
+            found = true;
+        }
+    }
 }
+
 //--------------------------------------------------------------------
 
 // library statistcs(prints total songs, total minutes, etc)
