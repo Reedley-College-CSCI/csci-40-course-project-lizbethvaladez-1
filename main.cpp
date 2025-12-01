@@ -44,6 +44,7 @@ void sortByMinutes(musicLibrary*& library, int songCount, bool ascending);
 void searchLibrary(musicLibrary*& library, int songCount);
 void searchSong(musicLibrary*& library, int songCount);
 void searchArtist(musicLibrary*& library, int songCount);
+void searchBoth(musicLibrary*& library, int songCount);
 
 
 
@@ -591,7 +592,7 @@ void searchLibrary(musicLibrary*& library, int songCount) {
     }
     //add menu for saerching library here
     char option;
-    cout << "A. Search Song, B. Search Arist (A, B, or C)\n X to Cancel\n";
+    cout << "A. Search Song, B. Search Arist, C. Search Both (A, B, or C)\n X to Cancel\n";
     cin >> option;
     while ((option != 'x') && (option != 'X')) {
         switch (option) {
@@ -602,6 +603,10 @@ void searchLibrary(musicLibrary*& library, int songCount) {
         case 'B': //Searches Arist 
         case 'b':
             searchArtist(library, songCount);
+            break;
+        case 'C': //Searches Arist 
+        case 'c':
+            searchBoth(library, songCount);
             break;
         default:
             cout << "Invalid Option - Retry" << endl;
@@ -624,7 +629,7 @@ void searchSong(musicLibrary*& library, int songCount) {
     }
 
     bool found = false;
-    cout << "\n--- Search Results for \"" << songSearch << "\" ---\n";
+    cout << "\n--- Search Results for " << songSearch << " ---\n";
 
     for (int i = 0; i < songCount; i++) {
         string songNameLower = library[i].song; //convert song name in array to lowercase to compare
@@ -650,6 +655,41 @@ void searchSong(musicLibrary*& library, int songCount) {
 
 }
 void searchArtist(musicLibrary*& library, int songCount) {
+    cin.ignore();
+    string artistSearch;
+    cout << "Enter artist name to search for: ";
+    getline(cin, artistSearch);
+
+    string artistSearchLower = artistSearch; //converts search term to lowercase
+    for (char& c : artistSearchLower) {
+        c = tolower(c);
+    }
+
+    bool found = false;
+    cout << "\n--- Search Results for Artist " << artistSearch << " ---\n";
+
+    for (int i = 0; i < songCount; i++) {
+        string artistNameLower = library[i].artist;  //convert artist name in array to lowercase to compare
+        for (char& c : artistNameLower) {
+            c = tolower(c);
+        }
+
+        if (artistNameLower.find(artistSearchLower) != string::npos) { //checks if term is in artist name
+            cout << i + 1 << ". " << library[i].song
+                << " | by " << library[i].artist
+                << " | " << library[i].minutes << " minutes\n";
+            found = true;
+        }
+    }
+
+    if (!found) {
+        cout << "No artists matching " << artistSearch << " were found" << endl;
+    }
+    else {
+        cout << "--- End of Results ---" << endl;
+    }
+}
+void searchBoth(musicLibrary*& library, int songCount) {
 
 }
 //--------------------------------------------------------------------
