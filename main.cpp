@@ -29,12 +29,14 @@ struct musicLibrary {
 void addSong();
 void printMusicLibrary(musicLibrary*& library, int size);
 void readLibraryFile(musicLibrary*& library, int& songCount);
+void editLibrary(musicLibrary*& library, int songCount);
 void removeSong(musicLibrary*& library, int& songCount);
 void libraryStats(musicLibrary*& library, int songCount);
 void editSong(musicLibrary*& library, int songCount);
 void sortLibrary(musicLibrary*& library, int songCount);
 void sortBySong(musicLibrary*& library, int songCount);
 void sortByArist(musicLibrary*& library, int songCount);
+
 
 
 
@@ -66,34 +68,7 @@ int main() {
 
         case 2: //edit library --------------------------------------------------------------------------- CASE 2
             cout << "Option 2: Edit Library" << endl;
-            char option;
-            cout << "A. Add a song, B. Edit a Song, or C. Remove a Song? (A, B, or C)\n X to Cancel\n";
-            cin >> option;
-            while ((option != 'x') && (option != 'X')) {
-                switch (option) {
-                case 'A': //adds song/s
-                case 'a':
-                    addSong();
-                    break;
-
-                case 'B': //edits a song
-                case 'b':
-                    cout << "Editing song" << endl;
-                    readLibraryFile(library, songCount); //rereads the array so it can display the songs that could be added
-                    editSong(library, songCount);
-                    break;
-
-                case 'C': //removing song
-                case 'c':
-                    readLibraryFile(library, songCount); //rereads the array so it can display the songs that could be removed
-                    removeSong(library, songCount);
-                        break;
-                default:
-                    cout << "Invalid Option - Retry" << endl;
-                    break;
-                }
-                break;
-            } //---------------------------------------------------------------------------------------------
+            editLibrary(library, songCount);
             break;
 
         case 3:
@@ -179,8 +154,36 @@ void printMusicLibrary(musicLibrary*& library, int songCount) {
     }
 }
 //edit library options
-void editLibrary() {
+void editLibrary(musicLibrary*& library, int songCount) { // keeps main code less cluttered
     //add menu for editing library here
+    char option;
+    cout << "A. Add a song, B. Edit a Song, or C. Remove a Song? (A, B, or C)\n X to Cancel\n";
+    cin >> option;
+    while ((option != 'x') && (option != 'X')) {
+        switch (option) {
+        case 'A': //adds song/s
+        case 'a':
+            addSong();
+            break;
+
+        case 'B': //edits a song
+        case 'b':
+            cout << "Editing song" << endl;
+            readLibraryFile(library, songCount); //rereads the array so it can display the songs that could be added
+            editSong(library, songCount);
+            break;
+
+        case 'C': //removing song
+        case 'c':
+            readLibraryFile(library, songCount); //rereads the array so it can display the songs that could be removed
+            removeSong(library, songCount);
+            break;
+        default:
+            cout << "Invalid Option - Retry" << endl;
+            break;
+        }
+        break;
+    } //---------------------------------------------------------------------------------------------
 }
 //add songs function
 void addSong() {
@@ -393,6 +396,7 @@ void sortLibrary(musicLibrary*& library, int songCount) { //sort function choice
         cout << "Library is empty, nothing to sort." << endl;
         return;
     }
+
 }
 void sortBySong(musicLibrary*& library, int songCount) {
 
