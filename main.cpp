@@ -520,10 +520,64 @@ void sortBySong(musicLibrary*& library, int songCount, bool ascending) {
 
 }
 void sortByArtist(musicLibrary*& library, int songCount, bool ascending) {
-    cout << "sort by artist" << endl;
+    for (int i = 0; i < songCount - 1; i++) {
+        for (int j = 0; j < songCount - i - 1; j++) {
+            bool shouldSwap;
+
+            if (ascending) {
+                // A-Z: swap if current > next
+                shouldSwap = (library[j].artist > library[j + 1].artist);
+            }
+            else {
+                // Z-A: swap if current < next
+                shouldSwap = (library[j].artist < library[j + 1].artist);
+            }
+
+            if (shouldSwap) {
+                // Swap the entire struct
+                musicLibrary temp = library[j];
+                library[j] = library[j + 1];
+                library[j + 1] = temp;
+            }
+        }
+    }
+
+    if (ascending) {
+        cout << "Sorted by Artists Name (A-Z)" << endl;
+    }
+    else {
+        cout << "Sorted by Artists Name (Z-A)" << endl;
+    }
 }
 void sortByMinutes(musicLibrary*& library, int songCount, bool ascending) {
-    cout << "sort by minutes" << endl;
+    for (int i = 0; i < songCount - 1; i++) {
+        for (int j = 0; j < songCount - i - 1; j++) {
+            bool shouldSwap;
+
+            if (ascending) {
+                // A-Z: swap if current > next
+                shouldSwap = (library[j].minutes > library[j + 1].minutes);
+            }
+            else {
+                // Z-A: swap if current < next
+                shouldSwap = (library[j].minutes < library[j + 1].minutes);
+            }
+
+            if (shouldSwap) {
+                // Swap the entire struct
+                musicLibrary temp = library[j];
+                library[j] = library[j + 1];
+                library[j + 1] = temp;
+            }
+        }
+    }
+
+    if (ascending) {
+        cout << "Sorted by Minutes (Shortest to Longest)" << endl;
+    }
+    else {
+        cout << "Sorted by Minutes (Longest to Shortest)" << endl;
+    }
 }
 
 // Maybe:
