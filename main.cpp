@@ -471,10 +471,53 @@ void sortLibrary(musicLibrary*& library, int songCount) { //sort function choice
         }
         break;
     }
+    //output the new sort order to files
+    ofstream libFile("music_library.txt");
+    if (!libFile.is_open()) {
+        cout << "Error: Could not open file for writing" << endl;
+        return;
+    }
+
+    for (int i = 0; i < songCount; i++) {
+        libFile << library[i].song << endl;
+        libFile << library[i].artist << endl;
+        libFile << fixed << setprecision(2) << library[i].minutes << endl;
+    }
+
+    libFile.close();
+    cout << "Songs sorted successfully!" << endl;
 
 }
 void sortBySong(musicLibrary*& library, int songCount, bool ascending) {
-    cout << "sort by song" << endl;
+    for (int i = 0; i < songCount - 1; i++) {
+        for (int j = 0; j < songCount - i - 1; j++) {
+            bool shouldSwap;
+
+            if (ascending) {
+                // A-Z: swap if current > next
+                shouldSwap = (library[j].song > library[j + 1].song);
+            }
+            else {
+                // Z-A: swap if current < next
+                shouldSwap = (library[j].song < library[j + 1].song);
+            }
+
+            if (shouldSwap) {
+                // Swap the entire struct
+                musicLibrary temp = library[j];
+                library[j] = library[j + 1];
+                library[j + 1] = temp;
+            }
+        }
+    }
+
+    if (ascending) {
+        cout << "Sorted by Song Name (A-Z)" << endl;
+    }
+    else {
+        cout << "Sorted by Song Name (Z-A)" << endl;
+    }
+
 }
 void sortByArtist(musicLibrary*& library, int songCount, bool ascending) {
     cout << "sort by artist" << endl;
