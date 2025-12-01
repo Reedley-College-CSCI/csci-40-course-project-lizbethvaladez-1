@@ -43,7 +43,7 @@ void sortByMinutes(musicLibrary*& library, int songCount, bool ascending);
 //searching ---------
 void searchLibrary(musicLibrary*& library, int songCount);
 void searchSong(musicLibrary*& library, int songCount);
-void searchArist(musicLibrary*& library, int songCount);
+void searchArtist(musicLibrary*& library, int songCount);
 
 
 
@@ -583,12 +583,35 @@ void sortByMinutes(musicLibrary*& library, int songCount, bool ascending) {
 
 //search functions -----------------------------------------------------
 void searchLibrary(musicLibrary*& library, int songCount) {
-
+    if (songCount == 0) {
+        cout << "Library is empty, nothing to search." << endl;
+        return;
+    }
+    //add menu for saerching library here
+    char option;
+    cout << "A. Search Song, B. Search Arist (A, B, or C)\n X to Cancel\n";
+    cin >> option;
+    while ((option != 'x') && (option != 'X')) {
+        switch (option) {
+        case 'A': //searches songs
+        case 'a':
+            searchSong(library, songCount);
+            break;
+        case 'B': //Searches Arist 
+        case 'b':
+            searchArtist(library, songCount);
+            break;
+        default:
+            cout << "Invalid Option - Retry" << endl;
+            break;
+        }
+        break;
+    }
 }
 void searchSong(musicLibrary*& library, int songCount) {
 
 }
-void searchArist(musicLibrary*& library, int songCount) {
+void searchArtist(musicLibrary*& library, int songCount) {
 
 }
 //--------------------------------------------------------------------
