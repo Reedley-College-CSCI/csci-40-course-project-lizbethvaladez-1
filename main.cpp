@@ -611,17 +611,28 @@ void searchLibrary(musicLibrary*& library, int songCount) {
     }
 }
 void searchSong(musicLibrary*& library, int songCount) {
+
     cin.ignore();
     string songSearch;
     cout << "Enter song name to search for: ";
     getline(cin, songSearch);
 
+
+    string songSearchLower = songSearch; //converts search term to lowercase
+    for (char& c : songSearchLower) {
+        c = tolower(c);
+    }
+
     bool found = false;
-    cout << "\n--- Search Results ---\n";
+    cout << "\n--- Search Results for \"" << songSearch << "\" ---\n";
 
     for (int i = 0; i < songCount; i++) {
-        if (library[i].song.find(songSearch) != string::npos) {
-            // partial-match search
+        string songNameLower = library[i].song; //convert song name in array to lowercase to compare
+        for (char& c : songNameLower) {
+            c = tolower(c);
+        }
+
+        if (songNameLower.find(songSearchLower) != string::npos) { //checks if term is in songname
             cout << i + 1 << ". " << library[i].song
                 << " | by " << library[i].artist
                 << " | " << library[i].minutes << " minutes\n";
@@ -630,7 +641,10 @@ void searchSong(musicLibrary*& library, int songCount) {
     }
 
     if (!found) {
-        cout << "No songs matching \"" << songSearch << "\" were found.\n";
+        cout << "No songs matching " << songSearch << " were found" << endl;
+    }
+    else {
+        cout << "--- End of Results ---" << endl;
     }
 
 
