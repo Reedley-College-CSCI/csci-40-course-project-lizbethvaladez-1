@@ -35,7 +35,8 @@ void libraryStats(musicLibrary*& library, int songCount);
 void editSong(musicLibrary*& library, int songCount);
 void sortLibrary(musicLibrary*& library, int songCount);
 void sortBySong(musicLibrary*& library, int songCount);
-void sortByArist(musicLibrary*& library, int songCount);
+void sortByArtist(musicLibrary*& library, int songCount);
+void sortByMinutes(musicLibrary*& library, int songCount);
 
 
 
@@ -76,6 +77,8 @@ int main() {
             break;
         case 4:
             cout << "Option 4: Sorting Options" << endl;
+            readLibraryFile(library, songCount); //rereads the array again
+            sortLibrary(library, songCount); // sorting
             break;
         default:
             cout << "Invalid Option-Retry." << endl;
@@ -185,6 +188,7 @@ void editLibrary(musicLibrary*& library, int songCount) { // keeps main code les
         break;
     } //---------------------------------------------------------------------------------------------
 }
+
 //add songs function
 void addSong() {
     ofstream libFile("music_library.txt", ios::app);
@@ -275,7 +279,6 @@ void removeSong(musicLibrary*& library, int& songCount) {
     libFile.close();
     cout << "Song removed successfully!" << endl;
 }
-
 
 // edit song
 void editSong(musicLibrary*& library, int songCount) {
@@ -386,6 +389,7 @@ void editSong(musicLibrary*& library, int songCount) {
 
 
 }
+
 /*//search function
 void searchLibrary(musicLibrary*& library, int songCount) {
 
@@ -396,13 +400,42 @@ void sortLibrary(musicLibrary*& library, int songCount) { //sort function choice
         cout << "Library is empty, nothing to sort." << endl;
         return;
     }
+    //add menu for sorting library here
+    char option;
+    cout << "A. Sort by Song, B. Sort by Song, C. Sort by Length (A, B, or C)\n X to Cancel\n";
+    cin >> option;
+    while ((option != 'x') && (option != 'X')) {
+        switch (option) {
+        case 'A': //adds song/s
+        case 'a':
+            sortBySong(library, songCount);            
+            break;
+
+        case 'B': //edits a song
+        case 'b':
+            sortByArtist(library, songCount);
+            break;
+
+        case 'C': //removing song
+        case 'c':
+            sortByMinutes(library, songCount);           
+            break;
+        default:
+            cout << "Invalid Option - Retry" << endl;
+            break;
+        }
+        break;
+    }
 
 }
 void sortBySong(musicLibrary*& library, int songCount) {
-
+    cout << "sort by song" << endl;
 }
 void sortByArtist(musicLibrary*& library, int songCount) {
-
+    cout << "sort by artist" << endl;
+}
+void sortByMinutes(musicLibrary*& library, int songCount) {
+    cout << "sort by minutes" << endl;
 }
 // Maybe:
 // library statistcs(prints total songs, total minutes, etc)
