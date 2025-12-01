@@ -742,6 +742,7 @@ void libraryStats(musicLibrary*& library, int songCount) {
         cout << "\nTotal Songs: " << songCount << " | Length: " << hours << " hour(s)" << endl;
     }
 }
-
+//MAYBE 
+// Backup feature - Before making changes to music library, the library is stored in a 'backup' txt file, in case user desires to return to a previous library look
 //create playlist function
 //delete playlist function
