@@ -12,7 +12,6 @@
 #include <iostream>
 #include <fstream> // for file reading
 #include <iomanip>
-#include <stdexcept> // For runtime_error() and invalid_argument
 
 
 using namespace std;
@@ -31,14 +30,18 @@ struct musicLibrary {
 void addSong();
 void printMusicLibrary(musicLibrary*& library, int size);
 void readLibraryFile(musicLibrary*& library, int& songCount);
+//Editing -----------
 void editLibrary(musicLibrary*& library, int songCount);
 void removeSong(musicLibrary*& library, int& songCount);
 void libraryStats(musicLibrary*& library, int songCount);
 void editSong(musicLibrary*& library, int songCount);
+//sorting -------------
 void sortLibrary(musicLibrary*& library, int songCount);
 void sortBySong(musicLibrary*& library, int songCount, bool ascending);
 void sortByArtist(musicLibrary*& library, int songCount, bool ascending);
 void sortByMinutes(musicLibrary*& library, int songCount, bool ascending);
+//searching ---------
+void searchLibrary(musicLibrary*& library, int songCount)
 
 
 
@@ -159,7 +162,8 @@ void printMusicLibrary(musicLibrary*& library, int songCount) {
             << library[i].artist << " | " << library[i].minutes << " minutes" << endl;
     }
 }
-//edit library options
+
+//edit library options ----------------------------------------------
 void editLibrary(musicLibrary*& library, int songCount) { // keeps main code less cluttered
     //add menu for editing library here
     char option;
@@ -191,7 +195,6 @@ void editLibrary(musicLibrary*& library, int songCount) { // keeps main code les
         break;
     } //---------------------------------------------------------------------------------------------
 }
-
 //add songs function
 void addSong() {
     ofstream libFile("music_library.txt", ios::app);
@@ -232,7 +235,6 @@ void addSong() {
     libFile.close();
     cout << "\nAdded Succesfully" << endl;
 }
-
 //remove songs function 
 void removeSong(musicLibrary*& library, int& songCount) {
     int choice;
@@ -282,7 +284,6 @@ void removeSong(musicLibrary*& library, int& songCount) {
     libFile.close();
     cout << "Song removed successfully!" << endl;
 }
-
 // edit song
 void editSong(musicLibrary*& library, int songCount) {
 
@@ -392,12 +393,9 @@ void editSong(musicLibrary*& library, int songCount) {
 
 
 }
+//------------------------------------------------------------------
 
-/*//search function
-void searchLibrary(musicLibrary*& library, int songCount) {
-
-}*/
-//sorting function
+//sorting functions ------------------------------------------------
 void sortLibrary(musicLibrary*& library, int songCount) { //sort function choice
     if (songCount == 0) {
         cout << "Library is empty, nothing to sort." << endl;
@@ -579,8 +577,20 @@ void sortByMinutes(musicLibrary*& library, int songCount, bool ascending) {
         cout << "Sorted by Minutes (Longest to Shortest)" << endl;
     }
 }
+//---------------------------------------------------------------------
 
-// Maybe:
+//search functions -----------------------------------------------------
+void searchLibrary(musicLibrary*& library, int songCount) {
+
+}
+void searchSong(musicLibrary*& library, int songCount) {
+
+}
+void searchArist(musicLibrary*& library, int songCount) {
+
+}
+//--------------------------------------------------------------------
+
 // library statistcs(prints total songs, total minutes, etc)
 void libraryStats(musicLibrary*& library, int songCount) {
     double totalMinutes = 0.0;
@@ -597,5 +607,6 @@ void libraryStats(musicLibrary*& library, int songCount) {
         cout << "\nTotal Songs: " << songCount << " | Length: " << hours << " hour(s)" << endl;
     }
 }
+
 //create playlist function
 //delete playlist function
