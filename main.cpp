@@ -100,7 +100,7 @@ int main() {
             cout << "Invalid Option - Retry." << endl;
             break;
         }
-    cout << "What would you like to do? (enter number)\n"
+    cout << "\nWhat would you like to do? (enter number)\n"
         << "1: View Library\n"
         << "2: Edit Library\n"
         << "3: Search\n"
@@ -161,14 +161,8 @@ void readLibraryFile(musicLibrary*& library, int& songCount) {
 
 //print library function
 void printMusicLibrary(musicLibrary*& library, int songCount) {
-    /* cout << "\n--- Songs Added ---" << endl;
-     for (int i = 0; i < size; i++) {
 
-         cout << i + 1 << ". " << library[i].song << " | by "
-             << library[i].artist << " | " << library[i].minutes << " minutes" << endl;
-
- */
-    cout << "--- Library ---" << endl;
+    cout << "\n--- Music Library ---" << endl;
     if (songCount == 0) {
         cout << "Library is empty" << endl;
         return;
@@ -177,6 +171,7 @@ void printMusicLibrary(musicLibrary*& library, int songCount) {
         cout << i + 1 << ". " << library[i].song << " | by "
             << library[i].artist << " | " << library[i].minutes << " minutes" << endl;
     }
+    cout << "--- End of Library ---" << endl;
 }
 
 //edit library options ----------------------------------------------
@@ -740,6 +735,8 @@ void searchBoth(musicLibrary*& library, int songCount) {
 // library statistcs(prints total songs, total minutes, etc)
 void libraryStats(musicLibrary*& library, int songCount) {
     double totalMinutes = 0.0;
+    cout << "--- Library Staistics ---" << endl;
+
     for (int i = 0; i < songCount; i++) {
         totalMinutes += library[i].minutes; //incramenting total minutes
     }
@@ -747,10 +744,10 @@ void libraryStats(musicLibrary*& library, int songCount) {
     double hours = totalMinutes / 60;
     //check if at least an hour, if not print in minutes
     if (hours < 1) {
-        cout << "\nTotal Songs: " << songCount << " | Length: " << totalMinutes << " minutes" << endl;
+        cout << "Total Songs: " << songCount << " | Length: " << totalMinutes << " minutes" << endl;
     }
     else {
-        cout << "\nTotal Songs: " << songCount << " | Length: " << hours << " hour(s)" << endl;
+        cout << "Total Songs: " << songCount << " | Length: " << hours << " hour(s)" << endl;
     }
 }
 //MAYBE 
