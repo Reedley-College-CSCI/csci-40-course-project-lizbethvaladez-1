@@ -62,41 +62,52 @@ int main() {
     // and sort playlist a certain way (potentially create playlist) 
 
     int action;
-    cout << "\nWhat would you like to do?(enter number)\n"
-        << "1: View Libray 2: Edit Library 3: Search 4: Sorting Options 5: Quit\n";
+    cout << "What would you like to do? (enter number)\n"
+        << "1: View Library\n"
+        << "2: Edit Library\n"
+        << "3: Search\n"
+        << "4: Sorting Options\n"
+        << "5: Quit\n"
+        << "Enter choice: ";
     cin >> action;
+
 
     while (action != 5) {
         switch (action) {
         case 1:
-            cout << "Option 1: View Libray";
+            cout << "\n--- View Library ---" << endl;
             readLibraryFile(library, songCount); //rereads the array so when a new song is added it can read it
             libraryStats(library, songCount); // prints library stats when library viewed
             printMusicLibrary(library, songCount); //test read
             break;
 
         case 2: //edit library --------------------------------------------------------------------------- CASE 2
-            cout << "Option 2: Edit Library" << endl;
+            cout << "\n--- Edit Library ---" << endl;
             editLibrary(library, songCount);
             break;
 
         case 3:
-            cout << "Option 3: Search" << endl;
+            cout << "\n--- Search ---" << endl;
             readLibraryFile(library, songCount); //rereads the array again
             searchLibrary(library, songCount);
             break;
         case 4:
-            cout << "Option 4: Sorting Options" << endl;
+            cout << "\n--- Search ---" << endl;
             readLibraryFile(library, songCount); //rereads the array again
             sortLibrary(library, songCount); // sorting
             break;
         default:
-            cout << "Invalid Option-Retry." << endl;
+            cout << "Invalid Option - Retry." << endl;
             break;
         }
-        cout << "\nWhat would you like to do?\n"
-            << "1: View Libray 2: Edit Library 3: Search 4: Sorting Options 5: Quit\n";
-        cin >> action;
+    cout << "What would you like to do? (enter number)\n"
+        << "1: View Library\n"
+        << "2: Edit Library\n"
+        << "3: Search\n"
+        << "4: Sorting Options\n"
+        << "5: Quit\n"
+        << "Enter choice: ";
+    cin >> action;
     }
 
 
