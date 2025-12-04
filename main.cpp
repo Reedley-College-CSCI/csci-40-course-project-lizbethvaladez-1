@@ -178,8 +178,13 @@ void printMusicLibrary(musicLibrary*& library, int songCount) {
 void editLibrary(musicLibrary*& library, int songCount) { // keeps main code less cluttered
     //add menu for editing library here
     char option;
-    cout << "A. Add a song, B. Edit a Song, or C. Remove a Song? (A, B, or C)\n X to Cancel\n";
-    cin >> option;
+    cout << "\nEdit Options:\n"
+        << "A. Add a song\n"
+        << "B. Edit a Song\n"
+        << "C. Remove a Song\n"
+        << "X. Cancel\n"
+        << "Enter choice: ";
+    cin >> option; 
     while ((option != 'x') && (option != 'X')) {
         switch (option) {
         case 'A': //adds song/s
@@ -189,7 +194,7 @@ void editLibrary(musicLibrary*& library, int songCount) { // keeps main code les
 
         case 'B': //edits a song
         case 'b':
-            cout << "Editing song" << endl;
+            cout << "--- Editing Library --- " << endl;
             readLibraryFile(library, songCount); //rereads the array so it can display the songs that could be added
             editSong(library, songCount);
             break;
@@ -254,13 +259,13 @@ void removeSong(musicLibrary*& library, int& songCount) {
         return;
     }
 
-    cout << "Current songs in library:" << endl; //displays songs to remove
+    cout << "\nCurrent songs in library:" << endl; //displays songs to remove
     for (int i = 0; i < songCount; i++) {
         cout << i + 1 << ". " << library[i].song << " | by "
             << library[i].artist << " | " << library[i].minutes << " minutes" << endl;
     }
 
-    cout << "Which song would would you like to remove?" << endl;
+    cout << "\nEnter the number of the song you would like to remove: ";
     cin >> choice;
 
     if (choice < 1 || choice > songCount) {
@@ -304,12 +309,12 @@ void editSong(musicLibrary*& library, int songCount) {
     }
 
     int choice;
-    cout << "Current songs in library:" << endl; //displays songs available to edit
+    cout << "\nCurrent songs in library:" << endl; //displays songs available to edit
     for (int i = 0; i < songCount; i++) {
         cout << i + 1 << ". " << library[i].song << " | by "
             << library[i].artist << " | " << library[i].minutes << " minutes" << endl;
     }
-    cout << "Which song would would you like to edit?" << endl;
+    cout << "Enter the number of the song you would like to remove : " << endl;
     cin >> choice;
     if (choice < 1 || choice > songCount) { //validates choice
         cout << "Invalid choice." << endl;
@@ -327,8 +332,12 @@ void editSong(musicLibrary*& library, int songCount) {
     double newMinutes;
 
     cout << "\nWhat would you like to edit?\n"
-        << "A. Song Name, B. Artist, C. Duration, D. All Fields, X. Cancel\n"
-        << "Enter your choice: ";
+        << "A. Song Name\n"
+        << "B. Artist\n"
+        << "C. Duration\n"
+        << "D. All Fields\n"
+        << "X. Cancel\n"
+        << "Enter choice: ";
     cin >> editOption;
     cin.ignore();
     //switch ------------------------------------------------
@@ -414,14 +423,23 @@ void sortLibrary(musicLibrary*& library, int songCount) { //sort function choice
     }
     //add menu for sorting library here
     char option;
-    cout << "A. Sort by Song, B. Sort by Arist, C. Sort by Length (A, B, or C)\n X to Cancel\n";
+    cout << "\nSort Options:\n"
+        << "A. Sort by Song\n"
+        << "B. Sort by Artist\n"
+        << "C. Sort by Length\n"
+        << "X. Cancel\n"
+        << "Enter choice: ";
     cin >> option;
     while ((option != 'x') && (option != 'X')) {
         switch (option) {
         case 'A': //sorts songs
         case 'a':
             //add ascending case --------------
-            cout << "1. Ascending, 2. Descending (Any Other Number to Cancel" << endl;
+            cout << "\nSort Order:\n"
+                << "1. Ascending (A-Z)\n"
+                << "2. Descending (Z-A)\n"
+                << "Any other number to Cancel\n"
+                << "Enter choice: ";
             int songOpt; //option of ascending for songs
             cin >> songOpt;
             switch (songOpt) {
@@ -440,7 +458,11 @@ void sortLibrary(musicLibrary*& library, int songCount) { //sort function choice
         case 'B': //edits a song
         case 'b':
             //add ascending case --------------
-            cout << "1. Ascending, 2. Descending (Any Other Number to Cancel" << endl;
+            cout << "\nSort Order:\n"
+                << "1. Ascending (A-Z)\n"
+                << "2. Descending (Z-A)\n"
+                << "Any other number to Cancel\n"
+                << "Enter choice: ";
             int artistOpt; //ascending options for artists
             cin >> artistOpt;
             switch (artistOpt) {
@@ -456,10 +478,14 @@ void sortLibrary(musicLibrary*& library, int songCount) { //sort function choice
             }            
             break;
 
-        case 'C': //removing song
+        case 'C': 
         case 'c':
             //add ascending case --------------
-            cout << "1. Ascending, 2. Descending (Any Other Number to Cancel" << endl;
+            cout << "\nSort Order:\n"
+                << "1. Ascending (Shortest to Longest)\n"
+                << "2. Descending (Longest to Shortest)\n"
+                << "Any other number to Cancel\n"
+                << "Enter choice: ";
             int minuteOpt; //ascending option for mintues
             cin >> minuteOpt;
             switch (minuteOpt) {
@@ -494,7 +520,6 @@ void sortLibrary(musicLibrary*& library, int songCount) { //sort function choice
     }
 
     libFile.close();
-    cout << "Songs sorted successfully!" << endl;
 
 }
 void sortBySong(musicLibrary*& library, int songCount, bool ascending) {
@@ -598,7 +623,12 @@ void searchLibrary(musicLibrary*& library, int songCount) {
     }
     //add menu for saerching library here
     char option;
-    cout << "A. Search Song, B. Search Arist, C. Search Both (A, B, or C)\n X to Cancel\n";
+    cout << "\nSearch Options:\n"
+        << "A. Search by Song Name\n"
+        << "B. Search by Artist\n"
+        << "C. Search Both\n"
+        << "X. Cancel\n"
+        << "Enter choice: ";
     cin >> option;
     while ((option != 'x') && (option != 'X')) {
         switch (option) {
@@ -744,10 +774,10 @@ void libraryStats(musicLibrary*& library, int songCount) {
     double hours = totalMinutes / 60;
     //check if at least an hour, if not print in minutes
     if (hours < 1) {
-        cout << "Total Songs: " << songCount << " | Length: " << totalMinutes << " minutes" << endl;
+        cout << "Total Songs: " << songCount << " | Length: " << fixed << setprecision(2) << totalMinutes << " minutes" << endl;
     }
     else {
-        cout << "Total Songs: " << songCount << " | Length: " << hours << " hour(s)" << endl;
+        cout << "Total Songs: " << songCount << " | Length: " << fixed << setprecision(2) <<  hours << " hour(s)" << endl;
     }
 }
 //MAYBE 
