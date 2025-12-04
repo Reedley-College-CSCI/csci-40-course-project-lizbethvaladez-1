@@ -45,6 +45,8 @@ void searchLibrary(musicLibrary*& library, int songCount);
 void searchSong(musicLibrary*& library, int songCount);
 void searchArtist(musicLibrary*& library, int songCount);
 void searchBoth(musicLibrary*& library, int songCount);
+//backup---------------
+void libraryBackup(musicLibrary*& library, int songCount);
 
 
 
@@ -92,7 +94,7 @@ int main() {
             searchLibrary(library, songCount);
             break;
         case 4:
-            cout << "\n--- Search ---" << endl;
+            cout << "\n--- Sorting ---" << endl;
             readLibraryFile(library, songCount); //rereads the array again
             sortLibrary(library, songCount); // sorting
             break;
@@ -303,6 +305,8 @@ void removeSong(musicLibrary*& library, int& songCount) {
 // edit song
 void editSong(musicLibrary*& library, int songCount) {
 
+   
+
     if (songCount == 0) { //checks if songCount is 0
         cout << "Library is empty, unable to write it." << endl;
         return;
@@ -344,6 +348,8 @@ void editSong(musicLibrary*& library, int songCount) {
     switch (editOption) {
     case 'A':
     case 'a':
+        readLibraryFile(library, songCount);
+        libraryBackup(library, songCount); // calling for backup before any edits occur
         cout << "Current song name: " << library[indexChoice].song << endl;
         cout << "Enter new song name: ";
         getline(cin, newSongName);
@@ -352,6 +358,8 @@ void editSong(musicLibrary*& library, int songCount) {
         break;
     case 'B':
     case 'b':
+        readLibraryFile(library, songCount);
+        libraryBackup(library, songCount); // calling for backup before any edits occur
         cout << "Current Artist name: " << library[indexChoice].artist << endl;
         cout << "Enter new Artist name: ";
         getline(cin, newArtistName);
@@ -364,10 +372,12 @@ void editSong(musicLibrary*& library, int songCount) {
         cout << "Enter new time(0.00): ";
         cin >> newMinutes;
         library[indexChoice].minutes = newMinutes;
-        cout << "Artist name updated successfully" << endl;
+        cout << "Minutes updated successfully" << endl;
         break;
     case 'D':
     case 'd':
+        readLibraryFile(library, songCount);
+        libraryBackup(library, songCount); // calling for backup before any edits occur
         //song
         cout << "Current song name: " << library[indexChoice].song << endl;
         cout << "Enter new song name: ";
@@ -385,7 +395,7 @@ void editSong(musicLibrary*& library, int songCount) {
         cout << "Enter new time(0.00): ";
         cin >> newMinutes;
         library[indexChoice].minutes = newMinutes;
-        cout << "Artist name updated successfully" << endl;
+        cout << "Minutes updated successfully" << endl;
         break;
     case 'X':
     case 'x':
@@ -434,6 +444,8 @@ void sortLibrary(musicLibrary*& library, int songCount) { //sort function choice
         switch (option) {
         case 'A': //sorts songs
         case 'a':
+            readLibraryFile(library, songCount);
+            libraryBackup(library, songCount); // calling for backup before any edits occur
             //add ascending case --------------
             cout << "\nSort Order:\n"
                 << "1. Ascending (A-Z)\n"
@@ -457,6 +469,8 @@ void sortLibrary(musicLibrary*& library, int songCount) { //sort function choice
 
         case 'B': //edits a song
         case 'b':
+            readLibraryFile(library, songCount);
+            libraryBackup(library, songCount); // calling for backup before any edits occur
             //add ascending case --------------
             cout << "\nSort Order:\n"
                 << "1. Ascending (A-Z)\n"
@@ -478,8 +492,10 @@ void sortLibrary(musicLibrary*& library, int songCount) { //sort function choice
             }            
             break;
 
-        case 'C': 
+        case 'C': //edits by minutes
         case 'c':
+            readLibraryFile(library, songCount);
+            libraryBackup(library, songCount); // calling for backup before any edits occur
             //add ascending case --------------
             cout << "\nSort Order:\n"
                 << "1. Ascending (Shortest to Longest)\n"
@@ -780,7 +796,21 @@ void libraryStats(musicLibrary*& library, int songCount) {
         cout << "Total Songs: " << songCount << " | Length: " << fixed << setprecision(2) <<  hours << " hour(s)" << endl;
     }
 }
-//MAYBE 
+
 // Backup feature - Before making changes to music library, the library is stored in a 'backup' txt file, in case user desires to return to a previous library look
-//create playlist function
-//delete playlist function
+void libraryBackup(musicLibrary*& library, int songCount) {
+    ofstream backup("backup_library.txt");
+
+    if (!backup.is_open()) {
+        cout << "Error: Could not create backup file." << endl;
+        return;
+    }
+    for (int i = 0; i < songCount; i++) {
+        backup << library[i].song << endl;
+        backup << library[i].artist << endl;
+        backup << fixed << setprecision(2) << library[i].minutes << endl;
+    }
+
+    backup.close();
+
+}
