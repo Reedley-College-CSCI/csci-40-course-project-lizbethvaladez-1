@@ -56,7 +56,7 @@ void restoreLibrary(musicLibrary*& library, int& songCount);
 int getValidInt(string prompt, int minVal, int maxVal);
 double getValidDouble(string prompt, double minVal, double maxVal);
 char getValidChar(string prompt, const string& validOptions);
-
+void viewBackup();
 
 int main() {
     int songCount = 0;
@@ -808,6 +808,27 @@ void backupMenu(musicLibrary*& library, int& songCount) {
         "C. Restore Backup\n" <<
         "X. Cancel\n";
     char option = getValidChar("Enter choice: ", "ABCX");
+
+    switch (option) {
+
+    case 'A': // view backup
+        viewBackup();
+        break;
+
+    case 'B': // backup current library
+        backupBeforeChange(library, songCount);
+        cout << "\n[ Backup Created Successfully ]\n";
+        break;
+
+    case 'C': // restore from backup
+        restoreLibrary(library, songCount);
+        break;
+
+    case 'X':
+        cout << "Backup menu canceled.\n";
+        break;
+    }
+
 }
 
 void backupBeforeChange(musicLibrary*& library, int songCount) {
@@ -868,6 +889,31 @@ void restoreLibrary(musicLibrary*& library, int& songCount) {
     libFile.close();
 
     cout << "\nLibrary successfully restored from backup" << endl;
+}
+void viewBackup() {
+    ifstream backupFile("backup_library.txt");
+
+    if (!backupFile.is_open()) {
+        cout << "Error: Could not open file" << endl;
+        return;
+    }
+    cout << "\n--- Backup Contents ---\n";
+
+    string line;
+    int lineCount = 0;
+
+    while (getline(backupFile, line)) {
+        cout << line << endl;
+        lineCount++;
+    }
+
+    if (lineCount == 0)
+        cout << "Backup file is empty" << endl;
+
+    cout << "--- End of Backup ---" << endl;
+
+    backupFile.close();
+
 }
 
 //VALID INPUT HADNLING ---------------------------------------------------------
