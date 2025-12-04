@@ -31,7 +31,7 @@ void addSong();
 void printMusicLibrary(musicLibrary*& library, int size);
 void readLibraryFile(musicLibrary*& library, int& songCount);
 //Editing -----------
-void editLibrary(musicLibrary*& library, int songCount);
+void editLibrary(musicLibrary*& library, int& songCount);
 void removeSong(musicLibrary*& library, int& songCount);
 void libraryStats(musicLibrary*& library, int songCount);
 void editSong(musicLibrary*& library, int songCount);
@@ -46,9 +46,8 @@ void searchSong(musicLibrary*& library, int songCount);
 void searchArtist(musicLibrary*& library, int songCount);
 void searchBoth(musicLibrary*& library, int songCount);
 //backup---------------
-void libraryBackup(musicLibrary*& library, int songCount);
-
-
+void backupBeforeChange(musicLibrary*& library, int songCount);
+void restoreLibrary(musicLibrary*& library, int& songCount);
 
 
 int main() {
@@ -177,13 +176,14 @@ void printMusicLibrary(musicLibrary*& library, int songCount) {
 }
 
 //edit library options ----------------------------------------------
-void editLibrary(musicLibrary*& library, int songCount) { // keeps main code less cluttered
+void editLibrary(musicLibrary*& library, int& songCount) { // keeps main code less cluttered
     //add menu for editing library here
     char option;
     cout << "\nEdit Options:\n"
         << "A. Add a song\n"
         << "B. Edit a Song\n"
         << "C. Remove a Song\n"
+        << "R. Backup Options\n"
         << "X. Cancel\n"
         << "Enter choice: ";
     cin >> option; 
@@ -191,20 +191,28 @@ void editLibrary(musicLibrary*& library, int songCount) { // keeps main code les
         switch (option) {
         case 'A': //adds song/s
         case 'a':
+            backupBeforeChange(library, songCount);
             addSong();
             break;
 
         case 'B': //edits a song
         case 'b':
             cout << "--- Editing Library --- " << endl;
+            backupBeforeChange(library, songCount);
             readLibraryFile(library, songCount); //rereads the array so it can display the songs that could be added
             editSong(library, songCount);
             break;
 
         case 'C': //removing song
         case 'c':
+            backupBeforeChange(library, songCount);
             readLibraryFile(library, songCount); //rereads the array so it can display the songs that could be removed
             removeSong(library, songCount);
+            break;
+        case 'R': //backup options
+        case 'r':
+            readLibraryFile(library, songCount);
+            restoreLibrary(library, songCount);
             break;
         default:
             cout << "Invalid Option - Retry" << endl;
@@ -256,6 +264,7 @@ void addSong() {
 //remove songs function 
 void removeSong(musicLibrary*& library, int& songCount) {
     int choice;
+
     if (songCount == 0) {
         cout << "Library is empty - no songs to remove." << endl;
         return;
@@ -348,8 +357,6 @@ void editSong(musicLibrary*& library, int songCount) {
     switch (editOption) {
     case 'A':
     case 'a':
-        readLibraryFile(library, songCount);
-        libraryBackup(library, songCount); // calling for backup before any edits occur
         cout << "Current song name: " << library[indexChoice].song << endl;
         cout << "Enter new song name: ";
         getline(cin, newSongName);
@@ -358,8 +365,6 @@ void editSong(musicLibrary*& library, int songCount) {
         break;
     case 'B':
     case 'b':
-        readLibraryFile(library, songCount);
-        libraryBackup(library, songCount); // calling for backup before any edits occur
         cout << "Current Artist name: " << library[indexChoice].artist << endl;
         cout << "Enter new Artist name: ";
         getline(cin, newArtistName);
@@ -376,8 +381,6 @@ void editSong(musicLibrary*& library, int songCount) {
         break;
     case 'D':
     case 'd':
-        readLibraryFile(library, songCount);
-        libraryBackup(library, songCount); // calling for backup before any edits occur
         //song
         cout << "Current song name: " << library[indexChoice].song << endl;
         cout << "Enter new song name: ";
@@ -444,8 +447,6 @@ void sortLibrary(musicLibrary*& library, int songCount) { //sort function choice
         switch (option) {
         case 'A': //sorts songs
         case 'a':
-            readLibraryFile(library, songCount);
-            libraryBackup(library, songCount); // calling for backup before any edits occur
             //add ascending case --------------
             cout << "\nSort Order:\n"
                 << "1. Ascending (A-Z)\n"
@@ -469,8 +470,6 @@ void sortLibrary(musicLibrary*& library, int songCount) { //sort function choice
 
         case 'B': //edits a song
         case 'b':
-            readLibraryFile(library, songCount);
-            libraryBackup(library, songCount); // calling for backup before any edits occur
             //add ascending case --------------
             cout << "\nSort Order:\n"
                 << "1. Ascending (A-Z)\n"
@@ -494,8 +493,6 @@ void sortLibrary(musicLibrary*& library, int songCount) { //sort function choice
 
         case 'C': //edits by minutes
         case 'c':
-            readLibraryFile(library, songCount);
-            libraryBackup(library, songCount); // calling for backup before any edits occur
             //add ascending case --------------
             cout << "\nSort Order:\n"
                 << "1. Ascending (Shortest to Longest)\n"
@@ -798,7 +795,7 @@ void libraryStats(musicLibrary*& library, int songCount) {
 }
 
 // Backup feature - Before making changes to music library, the library is stored in a 'backup' txt file, in case user desires to return to a previous library look
-void libraryBackup(musicLibrary*& library, int songCount) {
+void backupBeforeChange(musicLibrary*& library, int songCount) {
     ofstream backup("backup_library.txt");
 
     if (!backup.is_open()) {
@@ -813,4 +810,47 @@ void libraryBackup(musicLibrary*& library, int songCount) {
 
     backup.close();
 
+}
+// Restore library from backup_library.txt
+// Restore library from backup_library.txt and backup current library
+void restoreLibrary(musicLibrary*& library, int& songCount) {
+
+    ifstream backupFile("backup_library.txt");
+
+    if (!backupFile.is_open()) {
+        cout << "Error: Could not open backup file." << endl;
+        return;
+    }
+
+    musicLibrary* backupLibrary = new musicLibrary[MAX_SIZE];
+    int backupCount = 0;
+
+    while (backupCount < MAX_SIZE && getline(backupFile, backupLibrary[backupCount].song)) {
+        getline(backupFile, backupLibrary[backupCount].artist);
+
+        string minutesStr;
+        getline(backupFile, minutesStr);
+        backupLibrary[backupCount].minutes = stod(minutesStr);
+
+        backupCount++;
+    }
+
+    backupFile.close();
+
+    delete[] library;
+    library = backupLibrary;
+    songCount = backupCount;
+
+    // Write restored backup into main library file
+    ofstream libFile("music_library.txt");
+
+    for (int i = 0; i < songCount; i++) {
+        libFile << library[i].song << endl;
+        libFile << library[i].artist << endl;
+        libFile << fixed << setprecision(2) << library[i].minutes << endl;
+    }
+
+    libFile.close();
+
+    cout << "\n[Library successfully restored from backup]\n";
 }
