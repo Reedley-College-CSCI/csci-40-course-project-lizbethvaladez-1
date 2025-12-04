@@ -48,12 +48,14 @@ void searchSong(musicLibrary*& library, int songCount);
 void searchArtist(musicLibrary*& library, int songCount);
 void searchBoth(musicLibrary*& library, int songCount);
 //backup---------------
+void backupMenu(musicLibrary*& library, int& songCount);
 void backupBeforeChange(musicLibrary*& library, int songCount);
 void restoreLibrary(musicLibrary*& library, int& songCount);
 
 //VALIDATION FUNCTIONS
 int getValidInt(string prompt, int minVal, int maxVal);
 double getValidDouble(string prompt, double minVal, double maxVal);
+char getValidChar(string prompt, const string& validOptions);
 
 
 int main() {
@@ -188,9 +190,9 @@ void editLibrary(musicLibrary*& library, int& songCount) { // keeps main code le
         << "B. Edit a Song\n"
         << "C. Remove a Song\n"
         << "R. Backup Options\n"
-        << "X. Cancel\n"
-        << "Enter choice: ";
-    cin >> option; 
+        << "X. Cancel\n";
+
+    option = getValidChar("Enter choice: ", "ABCRX");
     while ((option != 'x') && (option != 'X')) {
         switch (option) {
         case 'A': //adds song/s
@@ -215,8 +217,7 @@ void editLibrary(musicLibrary*& library, int& songCount) { // keeps main code le
             break;
         case 'R': //backup options
         case 'r':
-            readLibraryFile(library, songCount);
-            restoreLibrary(library, songCount);
+            backupMenu(library, songCount);
             break;
         default:
             cout << "Invalid Option - Retry" << endl;
@@ -438,9 +439,8 @@ void sortLibrary(musicLibrary*& library, int songCount) { //sort function choice
         << "A. Sort by Song\n"
         << "B. Sort by Artist\n"
         << "C. Sort by Length\n"
-        << "X. Cancel\n"
-        << "Enter choice: ";
-    cin >> option;
+        << "X. Cancel\n";
+    option = getValidChar("Enter choice: ", "ABCX");
     while ((option != 'x') && (option != 'X')) {
         backupBeforeChange(library, songCount);//backup
         switch (option) {
@@ -646,9 +646,8 @@ void searchLibrary(musicLibrary*& library, int songCount) {
         << "A. Search by Song Name\n"
         << "B. Search by Artist\n"
         << "C. Search Both\n"
-        << "X. Cancel\n"
-        << "Enter choice: ";
-    cin >> option;
+        << "X. Cancel\n";
+    option = getValidChar("Enter choice: ", "ABCX");
     while ((option != 'x') && (option != 'X')) {
         switch (option) {
         case 'A': //searches songs
@@ -801,6 +800,16 @@ void libraryStats(musicLibrary*& library, int songCount) {
 }
 
 // Backup feature - Before making changes to music library, the library is stored in a 'backup' txt file, in case user desires to return to a previous library look
+void backupMenu(musicLibrary*& library, int& songCount) {
+
+    cout << "--- Menu Options ---" << endl;
+    cout << "A. View Backup\n" <<
+        "B. Backup Current Library\n" <<
+        "C. Restore Backup\n" <<
+        "X. Cancel\n";
+    char option = getValidChar("Enter choice: ", "ABCX");
+}
+
 void backupBeforeChange(musicLibrary*& library, int songCount) {
     ofstream backup("backup_library.txt");
 
@@ -858,7 +867,7 @@ void restoreLibrary(musicLibrary*& library, int& songCount) {
 
     libFile.close();
 
-    cout << "\n[Library successfully restored from backup]\n";
+    cout << "\nLibrary successfully restored from backup" << endl;
 }
 
 //VALID INPUT HADNLING ---------------------------------------------------------
@@ -880,7 +889,7 @@ int getValidInt(string prompt, int minVal, int maxVal) { //makes sure inputs wit
         }
     }
 }
-double getValidDouble(string prompt, double minVal, double maxVal) {
+double getValidDouble(string prompt, double minVal, double maxVal) { //checks if double entered is valid
     double value;
     while (true) {
         cout << prompt;
@@ -898,3 +907,26 @@ double getValidDouble(string prompt, double minVal, double maxVal) {
         }
     }
 }
+char getValidChar(string prompt, const string& validOptions) {
+    string input;
+
+    while (true) {
+        cout << prompt;
+        cin >> input;
+
+        // Must be exactly 1 character
+        if (input.length() != 1) {
+            cout << "Invalid input. Enter ONE character: " << validOptions << "\n";
+            continue;
+        }
+
+        char c = toupper(input[0]);  // make letters uppercase
+
+        // Check if valid
+        if (validOptions.find(c) != string::npos)
+            return c;
+
+        cout << "Invalid choice.\n";
+    }
+}
+
