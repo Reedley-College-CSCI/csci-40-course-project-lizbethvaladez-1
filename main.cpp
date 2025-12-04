@@ -53,6 +53,7 @@ void restoreLibrary(musicLibrary*& library, int& songCount);
 
 //VALIDATION FUNCTIONS
 int getValidInt(string prompt, int minVal, int maxVal);
+double getValidDouble(string prompt, double minVal, double maxVal);
 
 
 int main() {
@@ -247,7 +248,7 @@ void addSong() {
         getline(cin, artist);
 
         cout << "Length in Minutes (0.00): ";
-        cin >> minutes;
+        minutes = getValidDouble("Length in Minutes (0.00): ", 0.01, 30.00);
         cout << endl;
 
         libFile << song << "\n";
@@ -872,6 +873,24 @@ int getValidInt(string prompt, int minVal, int maxVal) { //makes sure inputs wit
             cin.ignore(1000, '\n');
             cout << "Invalid input. Enter a number between "
                 << minVal << " and " << maxVal << endl;
+        }
+        else {
+            cin.ignore(1000, '\n');
+            return value;
+        }
+    }
+}
+double getValidDouble(string prompt, double minVal, double maxVal) {
+    double value;
+    while (true) {
+        cout << prompt;
+        cin >> value;
+
+        if (cin.fail() || value < minVal || value > maxVal) {
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << "Invalid number. Must be between "
+                << minVal << " and " << maxVal << ".\n";
         }
         else {
             cin.ignore(1000, '\n');
