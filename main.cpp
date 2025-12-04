@@ -4,9 +4,8 @@
  * Description:
  * A music library program where users can add or remove songs that are read and stored on a file.
  * A menu will give options to add, remove, search, and sort the library. The search will be through song names
- * and artists. There will be options to sort by name and artist.
- * (WIP) There will be an option to create playlists from the main music library, potentially using pointers
- * to add the songs from the library
+ * and artists. There will be options to sort by name and artist. There is also a backup function--whenever the user 
+ * edits the library, the previous iteration is saved before any changes go through.
 */
 #include <string> // be able to use string
 #include <iostream>
@@ -25,6 +24,9 @@ struct musicLibrary {
     double minutes;
 
 };
+
+
+
 
 //FUNCTIONS 
 void addSong();
@@ -49,6 +51,9 @@ void searchBoth(musicLibrary*& library, int songCount);
 void backupBeforeChange(musicLibrary*& library, int songCount);
 void restoreLibrary(musicLibrary*& library, int& songCount);
 
+//VALIDATION FUNCTIONS
+int getValidInt(string prompt, int minVal, int maxVal);
+
 
 int main() {
     int songCount = 0;
@@ -68,9 +73,8 @@ int main() {
         << "2: Edit Library\n"
         << "3: Search\n"
         << "4: Sorting Options\n"
-        << "5: Quit\n"
-        << "Enter choice: ";
-    cin >> action;
+        << "5: Quit\n";
+    action = getValidInt("Enter choice: ", 1, 5);;
 
 
     while (action != 5) {
@@ -853,4 +857,24 @@ void restoreLibrary(musicLibrary*& library, int& songCount) {
     libFile.close();
 
     cout << "\n[Library successfully restored from backup]\n";
+}
+
+//VALID INPUT HADNLING ---------------------------------------------------------
+int getValidInt(string prompt, int minVal, int maxVal) { //makes sure inputs with an int choice are correct, including cases where characters or symbols are added
+    int value;
+    while (true) {
+        cout << prompt;
+        cin >> value;
+
+        if (cin.fail() || value < minVal || value > maxVal) {
+            cin.clear();
+            cin.ignore(1000, '\n');
+            cout << "Invalid input. Enter a number between "
+                << minVal << " and " << maxVal << endl;
+        }
+        else {
+            cin.ignore(1000, '\n');
+            return value;
+        }
+    }
 }
