@@ -248,7 +248,6 @@ void addSong() {
         cout << "Artist: ";
         getline(cin, artist);
 
-        cout << "Length in Minutes (0.00): ";
         minutes = getValidDouble("Length in Minutes (0.00): ", 0.01, 30.00);
         cout << endl;
 
