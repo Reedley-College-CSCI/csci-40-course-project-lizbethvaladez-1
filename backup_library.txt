@@ -1,0 +1,6 @@
+Deleted Song 1
+Artist 1
+2.99
+Deleted Song 2
+Artist 2
+3.01
