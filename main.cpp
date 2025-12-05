@@ -51,12 +51,12 @@ void searchBoth(musicLibrary*& library, int songCount);
 void backupMenu(musicLibrary*& library, int& songCount);
 void backupBeforeChange(musicLibrary*& library, int songCount);
 void restoreLibrary(musicLibrary*& library, int& songCount);
-
+void viewBackup();
 //VALIDATION FUNCTIONS
 int getValidInt(string prompt, int minVal, int maxVal);
 double getValidDouble(string prompt, double minVal, double maxVal);
 char getValidChar(string prompt, const string& validOptions);
-void viewBackup();
+
 
 int main() {
     int songCount = 0;
